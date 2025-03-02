@@ -1,13 +1,13 @@
 :root {
-    --primary-color: #128C7E;  /* WhatsApp green */
-    --secondary-color: #075E54;
-    --accent-color: #25D366;
-    --chat-bg: #E5DDD5;
-    --user-msg-bg: #DCF8C6;
+    --primary-color: #1A73E8;  /* Google Blue */
+    --secondary-color: #185ABC;
+    --accent-color: #4285F4;
+    --chat-bg: #F8F9FA;
+    --user-msg-bg: #E8F0FE;
     --bot-msg-bg: #FFFFFF;
-    --text-primary: #000000;
-    --text-secondary: #667781;
-    --border-color: #D1D7DB;
+    --text-primary: #202124;
+    --text-secondary: #5F6368;
+    --border-color: #DADCE0;
 }
 
 body {
