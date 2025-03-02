@@ -4,22 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const messageInput = document.querySelector('#message-input');
     const typingIndicator = document.querySelector('.typing-indicator');
 
-    // Initialize AOS
-    AOS.init();
-
     function addMessage(content, isUser = false) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-        messageDiv.setAttribute('data-aos', 'fade-up');
-        
+
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
         messageContent.textContent = content;
-        
+
         messageDiv.appendChild(messageContent);
         chatMessages.appendChild(messageDiv);
-        
-        // Scroll to bottom
+
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
@@ -34,15 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     messageForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
+
         const message = messageInput.value.trim();
         if (!message) return;
 
-        // Add user message
         addMessage(message, true);
         messageInput.value = '';
-
-        // Show typing indicator
         showTypingIndicator();
 
         try {
@@ -55,25 +47,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             const data = await response.json();
-            
-            // Hide typing indicator
             hideTypingIndicator();
 
             if (response.ok) {
-                // Add bot response
                 addMessage(data.response);
             } else {
-                addMessage('Sorry, I encountered an error. Please try again.');
+                addMessage('An error occurred. Please try again.');
             }
         } catch (error) {
             hideTypingIndicator();
-            addMessage('Sorry, I encountered an error. Please try again.');
+            addMessage('An error occurred. Please try again.');
             console.error('Error:', error);
         }
     });
 
-    // Add initial greeting
+    // Add initial greeting with slight delay
     setTimeout(() => {
-        addMessage("Hello! I'm Venom, your AI assistant created by Kaveri Pawar. How can I help you today?");
-    }, 1000);
+        addMessage("Hello! I'm Venom, your AI assistant. How can I help you today?");
+    }, 500);
 });
