@@ -28,12 +28,11 @@ def create_chat_completion(messages, max_retries=3, initial_wait=1):
             )
             return response.choices[0].message.content
         except Exception as e:
-            if "rate limit" in str(e).lower():  # Rate limit error
-                if attempt < max_retries - 1:
-                    wait_time = initial_wait * (2 ** attempt)  # Exponential backoff
-                    logger.warning(f"Rate limit hit, waiting {wait_time} seconds...")
-                    time.sleep(wait_time)
-                    continue
+            if "rate limit" in str(e).lower() and attempt < max_retries - 1:
+                wait_time = initial_wait * (2 ** attempt)  # Exponential backoff
+                logger.warning(f"Rate limit hit, waiting {wait_time} seconds...")
+                time.sleep(wait_time)
+                continue
             logger.error(f"OpenAI API error: {str(e)}")
             raise
 
@@ -64,7 +63,7 @@ def chat():
                 }), 429
             logger.error(f"Error in chat endpoint: {str(e)}")
             return jsonify({
-                'error': 'Something went wrong. Please try again in a moment.'
+                'error': 'Something went wrong. Please try again.'
             }), 500
 
     except Exception as e:
