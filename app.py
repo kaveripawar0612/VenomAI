@@ -10,8 +10,6 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "default-secret-key")
 
 # Initialize OpenAI client
-# the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-# do not change this unless explicitly requested by the user
 openai = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "your-api-key"))
 
 @app.route('/')
@@ -25,11 +23,11 @@ def chat():
         if not user_message:
             return jsonify({'error': 'No message provided'}), 400
 
-        # Create chat completion
+        # Create chat completion with gpt-3.5-turbo model
         response = openai.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-3.5-turbo",  # Using the free tier compatible model
             messages=[
-                {"role": "system", "content": "You are Venom, a helpful AI assistant created by Kaveri Pawar. Respond in a friendly and simple manner."},
+                {"role": "system", "content": "You are Venom, a helpful AI assistant created by Kaveri Pawar. Respond in a friendly and conversational manner like in a WhatsApp chat."},
                 {"role": "user", "content": user_message}
             ]
         )
